@@ -1,0 +1,23 @@
+{% extends 'posts/base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1 class="mb-4 text-center">Últimas Publicaciones</h1>
+        {% for post in posts %}
+            <div class="card mb-4 shadow-sm">
+                {% if post.imagen %}
+                    <img src="{{ post.imagen.url }}" class="card-img-top" alt="{{ post.titulo }}" style="max-height: 300px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="card-title">{{ post.titulo }}</h3>
+                    <p class="text-muted small">Por {{ post.autor.username }} el {{ post.fecha_creacion|date:"d/m/Y H:i" }}</p>
+                    <p class="card-text">{{ post.contenido|truncatewords:30 }}</p>
+                    <a href="{% url 'detalle_post' post.pk %}" class="btn btn-primary btn-sm">Leer más</a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">No hay publicaciones todavía.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
