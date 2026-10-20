@@ -75,3 +75,8 @@ def login_usuario(request):
 def logout_usuario(request):
     logout(request)
     return redirect('lista_posts')
+
+@login_required
+def perfil_usuario(request):
+    posts_usuario = Post.objects.filter(autor=request.user).order_by('-fecha_creacion')
+    return render(request, 'posts/perfil.html', {'posts_usuario': posts_usuario})
